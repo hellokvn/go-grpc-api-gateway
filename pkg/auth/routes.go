@@ -1,9 +1,8 @@
-package product
+package auth
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"github.com/hellokvn/go-grpc-api-gateway/pkg/auth/routes"
 )
 
 func RegisterRoutes(r *gin.Engine) {
@@ -12,14 +11,14 @@ func RegisterRoutes(r *gin.Engine) {
 	}
 
 	routes := r.Group("/auth")
-	routes.POST("/", c.Register)
-	routes.GET("/:id", c.Login)
+	routes.POST("/register", c.Register)
+	routes.POST("/login", c.Login)
 }
 
 func (c *ServiceClient) Register(ctx *gin.Context) {
-	ctx.Status(http.StatusOK)
+	routes.Register(ctx, c.Client)
 }
 
 func (c *ServiceClient) Login(ctx *gin.Context) {
-	ctx.Status(http.StatusOK)
+	routes.Login(ctx, c.Client)
 }

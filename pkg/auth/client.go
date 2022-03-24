@@ -1,4 +1,4 @@
-package product
+package auth
 
 import (
 	"fmt"
@@ -12,9 +12,9 @@ type ServiceClient struct {
 }
 
 func InitServiceClient() pb.AuthServiceClient {
-	fmt.Println("Product Service Client")
+	fmt.Println("Auth Service Client")
 
-	cc, err := grpc.Dial("localhost:50052", grpc.WithInsecure())
+	cc, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
 
 	if err != nil {
 		fmt.Println("Could not connect:", err)

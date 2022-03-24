@@ -1,4 +1,4 @@
-package client
+package product
 
 import (
 	"fmt"
@@ -7,7 +7,11 @@ import (
 	"google.golang.org/grpc"
 )
 
-func InitProductServiceClient() pb.ProductServiceClient {
+type ServiceClient struct {
+	Client pb.ProductServiceClient
+}
+
+func InitServiceClient() pb.ProductServiceClient {
 	fmt.Println("Product Service Client")
 
 	cc, err := grpc.Dial("localhost:50052", grpc.WithInsecure())

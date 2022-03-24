@@ -11,15 +11,15 @@ func RegisterRoutes(r *gin.Engine) {
 		Client: InitServiceClient(),
 	}
 
-	routes := r.Group("/product")
-	routes.POST("/", c.AddProduct)
-	routes.GET("/:id", c.FindOne)
+	routes := r.Group("/auth")
+	routes.POST("/", c.Register)
+	routes.GET("/:id", c.Login)
 }
 
-func (c *ServiceClient) FindOne(ctx *gin.Context) {
+func (c *ServiceClient) Register(ctx *gin.Context) {
 	ctx.Status(http.StatusOK)
 }
 
-func (c *ServiceClient) AddProduct(ctx *gin.Context) {
+func (c *ServiceClient) Login(ctx *gin.Context) {
 	ctx.Status(http.StatusOK)
 }

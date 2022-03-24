@@ -1,9 +1,9 @@
 package product
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"github.com/hellokvn/go-grpc-api-gateway/pkg/auth"
+	"github.com/hellokvn/go-grpc-api-gateway/pkg/product/routes"
 )
 
 func RegisterRoutes(r *gin.Engine) {
@@ -12,14 +12,15 @@ func RegisterRoutes(r *gin.Engine) {
 	}
 
 	routes := r.Group("/product")
-	routes.POST("/", c.AddProduct)
+	routes.Use(auth.AuthRequired)
+	routes.POST("/", c.CreateProduct)
 	routes.GET("/:id", c.FindOne)
 }
 
 func (c *ServiceClient) FindOne(ctx *gin.Context) {
-	ctx.Status(http.StatusOK)
+	routes.FineOne(ctx, c.Client)
 }
 
-func (c *ServiceClient) AddProduct(ctx *gin.Context) {
-	ctx.Status(http.StatusOK)
+func (c *ServiceClient) CreateProduct(ctx *gin.Context) {
+	routes.CreateProduct(ctx, c.Client)
 }

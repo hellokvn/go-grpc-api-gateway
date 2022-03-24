@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package product;
 
-option go_package = "./pkg/pb";
+option go_package = "./pkg/product/pb";
 
 service ProductService {
   rpc CreateProduct(CreateProductRequest) returns (CreateProductResponse) {}
@@ -15,30 +15,30 @@ service ProductService {
 message CreateProductRequest {
   string name = 1;
   string sku = 2;
-  int32 stock = 3;
-  int32 price = 4;
+  int64 stock = 3;
+  int64 price = 4;
 }
 
 message CreateProductResponse {
-  int32 status = 1;
+  int64 status = 1;
   string error = 2;
-  int32 id = 3;
+  int64 id = 3;
 }
 
 // FindOne
 
 message FindOneData {
-  int32 id = 1;
+  int64 id = 1;
   string name = 2;
   string sku = 3;
-  int32 stock = 4;
-  int32 price = 5;
+  int64 stock = 4;
+  int64 price = 5;
 }
 
-message FindOneRequest { int32 id = 1; }
+message FindOneRequest { int64 id = 1; }
 
 message FindOneResponse {
-  int32 status = 1;
+  int64 status = 1;
   string error = 2;
   FindOneData data = 3;
 }
@@ -46,11 +46,11 @@ message FindOneResponse {
 // DecreaseStock
 
 message DecreaseStockRequest {
-  int32 id = 1;
-  int32 orderId = 2;
+  int64 id = 1;
+  int64 orderId = 2;
 }
 
 message DecreaseStockResponse {
-  int32 status = 1;
+  int64 status = 1;
   string error = 2;
 }

@@ -12,8 +12,6 @@ type ServiceClient struct {
 }
 
 func InitServiceClient() pb.AuthServiceClient {
-	fmt.Println("Auth Service Client")
-
 	cc, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
 
 	if err != nil {

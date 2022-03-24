@@ -2,7 +2,6 @@ package routes
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -15,7 +14,6 @@ type RegisterRequestBody struct {
 }
 
 func Register(ctx *gin.Context, c pb.AuthServiceClient) {
-	fmt.Println("Register")
 	body := RegisterRequestBody{}
 
 	if err := ctx.BindJSON(&body); err != nil {

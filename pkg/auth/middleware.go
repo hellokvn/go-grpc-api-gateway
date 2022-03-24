@@ -2,7 +2,6 @@ package auth
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"strings"
 
@@ -11,7 +10,6 @@ import (
 )
 
 func AuthRequired(ctx *gin.Context) {
-	fmt.Println("AuthRequired --------------")
 	authorization := ctx.Request.Header.Get("authorization")
 
 	if authorization == "" {
@@ -30,14 +28,9 @@ func AuthRequired(ctx *gin.Context) {
 		Client: InitServiceClient(),
 	}
 
-	fmt.Println("token", token[1])
-
 	res, err := c.Client.Validate(context.Background(), &pb.ValidateRequest{
 		Token: token[1],
 	})
-
-	fmt.Println("res", res)
-	fmt.Println("err", err)
 
 	if err != nil || res.Status != http.StatusOK {
 		ctx.AbortWithStatus(http.StatusUnauthorized)

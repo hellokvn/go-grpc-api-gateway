@@ -3,7 +3,7 @@ syntax = "proto3";
 
 package auth;
 
-option go_package = "./pkg/pb";
+option go_package = "./pkg/auth/pb";
 
 service AuthService {
   rpc Register(RegisterRequest) returns (RegisterResponse) {}

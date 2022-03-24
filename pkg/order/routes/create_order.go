@@ -9,8 +9,8 @@ import (
 )
 
 type CreateOrderRequestBody struct {
-	ProductId int32 `json:"productId"`
-	Quantity  int32 `json:"quantity"`
+	ProductId int64 `json:"productId"`
+	Quantity  int64 `json:"quantity"`
 }
 
 func CreateOrder(ctx *gin.Context, c pb.OrderServiceClient) {
@@ -26,7 +26,7 @@ func CreateOrder(ctx *gin.Context, c pb.OrderServiceClient) {
 	res, err := c.CreateOrder(context.Background(), &pb.CreateOrderRequest{
 		ProductId: body.ProductId,
 		Quantity:  body.Quantity,
-		UserId:    userId.(int32),
+		UserId:    userId.(int64),
 	})
 
 	if err != nil {

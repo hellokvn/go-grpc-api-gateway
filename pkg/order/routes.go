@@ -1,9 +1,9 @@
-package product
+package order
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
+	"github.com/hellokvn/go-grpc-api-gateway/pkg/auth"
+	"github.com/hellokvn/go-grpc-api-gateway/pkg/order/routes"
 )
 
 func RegisterRoutes(r *gin.Engine) {
@@ -12,9 +12,10 @@ func RegisterRoutes(r *gin.Engine) {
 	}
 
 	routes := r.Group("/order")
+	routes.Use(auth.AuthRequired)
 	routes.POST("/", c.CreateOrder)
 }
 
 func (c *ServiceClient) CreateOrder(ctx *gin.Context) {
-	ctx.Status(http.StatusOK)
+	routes.CreateOrder(ctx, c.Client)
 }

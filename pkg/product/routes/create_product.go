@@ -15,17 +15,17 @@ type CreateProductRequestBody struct {
 }
 
 func CreateProduct(ctx *gin.Context, c pb.ProductServiceClient) {
-	body := CreateProductRequestBody{}
+	b := CreateProductRequestBody{}
 
-	if err := ctx.BindJSON(&body); err != nil {
+	if err := ctx.BindJSON(&b); err != nil {
 		ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
 
 	res, err := c.CreateProduct(context.Background(), &pb.CreateProductRequest{
-		Name:  body.Name,
-		Stock: body.Stock,
-		Price: body.Price,
+		Name:  b.Name,
+		Stock: b.Stock,
+		Price: b.Price,
 	})
 
 	if err != nil {

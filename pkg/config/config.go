@@ -9,7 +9,7 @@ type Config struct {
 	OrderSvcUrl   string `mapstructure:"ORDER_SVC_URL"`
 }
 
-func LoadConfig() (config Config, err error) {
+func LoadConfig() (c Config, err error) {
 	viper.AddConfigPath("./pkg/config/envs")
 	viper.SetConfigName("dev")
 	viper.SetConfigType("env")
@@ -22,7 +22,7 @@ func LoadConfig() (config Config, err error) {
 		return
 	}
 
-	err = viper.Unmarshal(&config)
+	err = viper.Unmarshal(&c)
 
 	return
 }

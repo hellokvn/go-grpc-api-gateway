@@ -14,9 +14,9 @@ type CreateOrderRequestBody struct {
 }
 
 func CreateOrder(ctx *gin.Context, c pb.OrderServiceClient) {
-	body := CreateOrderRequestBody{}
+	b := CreateOrderRequestBody{}
 
-	if err := ctx.BindJSON(&body); err != nil {
+	if err := ctx.BindJSON(&b); err != nil {
 		ctx.AbortWithError(http.StatusBadRequest, err)
 		return
 	}
@@ -24,8 +24,8 @@ func CreateOrder(ctx *gin.Context, c pb.OrderServiceClient) {
 	userId, _ := ctx.Get("userId")
 
 	res, err := c.CreateOrder(context.Background(), &pb.CreateOrderRequest{
-		ProductId: body.ProductId,
-		Quantity:  body.Quantity,
+		ProductId: b.ProductId,
+		Quantity:  b.Quantity,
 		UserId:    userId.(int64),
 	})
 

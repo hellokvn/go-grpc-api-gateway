@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -9,7 +10,15 @@ import (
 	"github.com/hellokvn/go-grpc-api-gateway/pkg/auth/pb"
 )
 
-func AuthRequired(ctx *gin.Context) {
+type AuthMiddlewareConfig struct {
+	svc *ServiceClient
+}
+
+func InitAuthMiddleware(svc *ServiceClient) AuthMiddlewareConfig {
+	return AuthMiddlewareConfig{svc}
+}
+
+func (c *AuthMiddlewareConfig) AuthRequired(ctx *gin.Context) {
 	authorization := ctx.Request.Header.Get("authorization")
 
 	if authorization == "" {
@@ -20,19 +29,17 @@ func AuthRequired(ctx *gin.Context) {
 	token := strings.Split(authorization, "Bearer ")
 
 	if len(token) < 2 {
+		fmt.Println("1")
 		ctx.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}
 
-	c := &ServiceClient{
-		Client: InitServiceClient(),
-	}
-
-	res, err := c.Client.Validate(context.Background(), &pb.ValidateRequest{
+	res, err := c.svc.Client.Validate(context.Background(), &pb.ValidateRequest{
 		Token: token[1],
 	})
 
 	if err != nil || res.Status != http.StatusOK {
+		fmt.Println("2", err, res)
 		ctx.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}

@@ -1,3 +1,4 @@
+
 syntax = "proto3";
 
 package auth;
@@ -42,5 +43,5 @@ message ValidateRequest { string token = 1; }
 message ValidateResponse {
   int32 status = 1;
   string error = 2;
-  int32 authId = 3;
+  int32 userId = 3;
 }
